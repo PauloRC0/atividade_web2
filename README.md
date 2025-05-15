@@ -1,3 +1,10 @@
-# atividade_web2
+# Repositório de Atividades Web-II
 
-Aluno : Paulo Ricardo Cabral da Silva 
+**Nome:** Paulo Ricardo Cabral da Silva  
+**Curso:** Tecnologia em Sistemas para Internet  
+**Disciplina:** Desenvolvimento Web II
+
+## Atividades
+
+- **Atividade 01** – Criando um Projeto Novo – `atividade_01/`  
+- **Atividade 02** – Migrations no Laravel – `atividade_02/`
