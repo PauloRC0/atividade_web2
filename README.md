@@ -10,3 +10,4 @@
 - **Atividade 02** – Migrations no Laravel – `atividade_02/`
 - **Atividade 03** – Seeds e Factories no Laravel– `atividade_03/`
 - **Atividade 4.1** – Inclusão de Relacionamento N para N Empréstimo– `atividade_4.1/`
+- **Atividade 05** – Autenticação, Controllers, Rotas e Views – `atividade_05/`
