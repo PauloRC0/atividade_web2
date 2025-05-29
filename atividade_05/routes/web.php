@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Auth;
+
+route::resource('authors', AuthorController::class);
 
 Route::resource('categories', CategoryController::class);
 
