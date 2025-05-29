@@ -2,63 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Exibe uma lista de autores
     public function index()
     {
-        //
+        $authors = Author::all();
+        return view('authors.index', compact('authors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Mostra o formulário para criar um novo autor
     public function create()
     {
-        //
+        return view('authors.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Armazena um novo autor no banco de dados
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:authors|max:255',
+        ]);
+
+        Author::create($request->all());
+
+        return redirect()->route('authors.index')->with('success', 'Autor criado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Exibe um autor específico
+    public function show(Author $author)
     {
-        //
+        return view('authors.show', compact('author'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    // Mostra o formulário para editar um autor existente
+    public function edit(Author $author)
     {
-        //
+        return view('authors.edit', compact('author'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    // Atualiza um autor no banco de dados
+    public function update(Request $request, Author $author)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:authors,name,' . $author->id . '|max:255',
+        ]);
+
+        $author->update($request->all());
+
+        return redirect()->route('authors.index')->with('success', 'Autor atualizado com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Remove um autor do banco de dados
+    public function destroy(Author $author)
     {
-        //
+        $author->delete();
+
+        return redirect()->route('authors.index')->with('success', 'Autor excluído com sucesso.');
     }
 }
