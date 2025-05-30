@@ -55,4 +55,12 @@ class BookController extends Controller
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
+    public function edit(Book $book)
+    {
+    $publishers = Publisher::all();
+    $authors = Author::all();
+    $categories = Category::all();
+
+    return view('books.edit', compact('book', 'publishers', 'authors', 'categories'));
+    }
 }
