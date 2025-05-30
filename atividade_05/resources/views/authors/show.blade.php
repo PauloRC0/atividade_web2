@@ -6,11 +6,11 @@
 
     <div class="card">
         <div class="card-header">
-            Autor: {{ $authors->name }}
+            Autor: {{ $author->name }}
         </div>
         <div class="card-body">
-            <p><strong>ID:</strong> {{ $authors->id }}</p>
-            <p><strong>Nome:</strong> {{ $authors->name }}</p>
+            <p><strong>ID:</strong> {{ $author->id }}</p>
+            <p><strong>Nome:</strong> {{ $author->name }}</p>
         </div>
     </div>
 
