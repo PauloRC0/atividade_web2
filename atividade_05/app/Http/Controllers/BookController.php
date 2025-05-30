@@ -63,4 +63,17 @@ class BookController extends Controller
 
     return view('books.edit', compact('book', 'publishers', 'authors', 'categories'));
     }
+    public function update(Request $request, Book $book)
+    {
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'publisher_id' => 'required|exists:publishers,id',
+        'author_id' => 'required|exists:authors,id',
+        'category_id' => 'required|exists:categories,id',
+    ]);
+
+    $book->update($request->all());
+
+    return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
+    }
 }
