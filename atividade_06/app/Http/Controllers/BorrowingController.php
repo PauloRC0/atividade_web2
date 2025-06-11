@@ -22,4 +22,12 @@ class BorrowingController extends Controller
 
     return redirect()->route('books.show', $book)->with('success', 'Empréstimo registrado com sucesso.');
 }
+public function returnBook(Borrowing $borrowing)
+{
+    $borrowing->update([
+        'returned_at' => now(),
+    ]);
+
+    return redirect()->route('books.show', $borrowing->book_id)->with('success', 'Devolução registrada com sucesso.');
+}
 }
