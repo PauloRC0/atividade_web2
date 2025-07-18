@@ -28,7 +28,16 @@ class BookController extends Controller
             'capa_livro' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        Book::create($request->all());
+        $path = $request->file('capa_livro')->store('livros', 'public');
+
+        Book::create([
+            'title' => $request->title,
+            'publisher_id' => $request->publisher_id,
+            'author_id' => $request->author_id,
+            'category_id' => $request->category_id,
+            'capa_livro' => $path,
+        ]);
+
 
         return redirect()->route('books.index')->with('success', 'Livro criado com sucesso.');
     }
@@ -61,7 +70,7 @@ class BookController extends Controller
             'publisher_id' => $request->publisher_id,
             'author_id' => $request->author_id,
             'category_id' => $request->category_id,
-            'capa_livro' => $request->capa_livro,
+            'capa_livro' => $path,
         ]);
 
 
@@ -82,10 +91,25 @@ class BookController extends Controller
         'publisher_id' => 'required|exists:publishers,id',
         'author_id' => 'required|exists:authors,id',
         'category_id' => 'required|exists:categories,id',
-        'capa_livro' => 'image|mimes:jpeg,png,jpg|max:2048',
+        'capa_livro' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
     ]);
 
-    $book->update($request->all());
+    $data = $request->only([
+        'title',
+        'publisher_id',
+        'author_id',
+        'category_id',
+        
+    ]);
+
+    if ($request->hasFile('capa_livro')) {
+        $path = $request->file('capa_livro')->store('livros', 'public');
+        $book->update([
+            'capa_livro' => $path,
+        ]);
+    }
+
+    $book->update($data);
 
     return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
     }
