@@ -8,6 +8,7 @@ use App\Models\Publisher;
 use App\Models\Author;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -25,10 +26,13 @@ class BookController extends Controller
             'publisher_id' => 'required|exists:publishers,id',
             'author_id' => 'required|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
-            'capa_livro' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'capa_livro' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $path = $request->file('capa_livro')->store('livros', 'public');
+        $path = null;
+        if ($request->hasFile('capa_livro')) {
+            $path = $request->file('capa_livro')->store('livros', 'public');
+        }
 
         Book::create([
             'title' => $request->title,
@@ -60,10 +64,13 @@ class BookController extends Controller
             'publisher_id' => 'required|exists:publishers,id',
             'author_id' => 'required|exists:authors,id',
             'category_id' => 'required|exists:categories,id',
-            'capa_livro' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'capa_livro' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $path = $request->file('capa_livro')->store('livros', 'public');
+        $path = null;
+        if ($request->hasFile('capa_livro')) {
+            $path = $request->file('capa_livro')->store('livros', 'public');
+        }
 
         Book::create([
             'title' => $request->title,
@@ -102,13 +109,14 @@ class BookController extends Controller
         
     ]);
 
-    if ($request->hasFile('capa_livro')) {
-        $path = $request->file('capa_livro')->store('livros', 'public');
-        $book->update([
-            'capa_livro' => $path,
-        ]);
-    }
+   if ($request->hasFile('capa_livro')) {
+            if ($book->capa_livro && Storage::disk('public')->exists($book->capa_livro)) {
+                Storage::disk('public')->delete($book->capa_livro);
+        }
 
+        $data['capa_livro'] = $request->file('capa_livro')->store('livros', 'public');
+    }
+    
     $book->update($data);
 
     return redirect()->route('books.index')->with('success', 'Livro atualizado com sucesso.');
