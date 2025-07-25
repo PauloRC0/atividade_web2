@@ -29,9 +29,9 @@ class BookController extends Controller
             'capa_livro' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $path = null;
+        $caminhoImagem = null;
         if ($request->hasFile('capa_livro')) {
-            $path = $request->file('capa_livro')->store('livros', 'public');
+            $caminhoImagem = $request->file('capa_livro')->store('livros', 'public');
         }
 
         Book::create([
@@ -39,7 +39,7 @@ class BookController extends Controller
             'publisher_id' => $request->publisher_id,
             'author_id' => $request->author_id,
             'category_id' => $request->category_id,
-            'capa_livro' => $path,
+            'capa_livro' => $caminhoImagem,
         ]);
 
 
@@ -67,9 +67,9 @@ class BookController extends Controller
             'capa_livro' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $path = null;
+        $caminhoImagem = null;
         if ($request->hasFile('capa_livro')) {
-            $path = $request->file('capa_livro')->store('livros', 'public');
+            $caminhoImagem = $request->file('capa_livro')->store('livros', 'public');
         }
 
         Book::create([
@@ -77,7 +77,7 @@ class BookController extends Controller
             'publisher_id' => $request->publisher_id,
             'author_id' => $request->author_id,
             'category_id' => $request->category_id,
-            'capa_livro' => $path,
+            'capa_livro' => $caminhoImagem,
         ]);
 
 
