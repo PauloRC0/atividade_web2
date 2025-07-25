@@ -4,7 +4,7 @@
 <div class="container">
     <h1 class="my-4">Editar Livro</h1>
 
-    <form action="{{ route('books.update', $book) }}" method="POST">
+    <form action="{{ route('books.update', $book) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
@@ -62,6 +62,16 @@
                 @endforeach
             </select>
             @error('category_id')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+
+        <div class="mb-3">
+            <label for="capa_livro" class="form-label">Alterar Capa</label>
+            <input type="file" class="form-control @error('capa_livro') is-invalid @enderror" id="capa_livro" name="capa_livro" accept="image/*">
+            @error('capa_livro')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
