@@ -21,6 +21,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Capa</th>
                 <th>Título</th>
                 <th>Autor</th>
                 <th>Ações</th>
@@ -30,6 +31,13 @@
             @forelse($books as $book)
                 <tr>
                     <td>{{ $book->id }}</td>
+                    <td>
+                        @if($book->capa_livro)
+                            <img src="{{ asset('storage/' . $book->capa_livro) }}" alt="Capa do Livro" style="max-width: 50px; height: auto;">
+                        @else
+                            <p>Sem imagem cadastrada.</p>
+                        @endif
+                    </td>
                     <td>{{ $book->title }}</td>
                     <td>{{ $book->author->name }}</td>
                     <td>
